@@ -24,4 +24,3 @@ Additional modules:
 
 3. method of similar by synthetics texts to get additional similarity properties of products
 
-Translated with www.DeepL.com/Translator (free version)
