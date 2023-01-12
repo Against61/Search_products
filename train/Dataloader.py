@@ -15,8 +15,8 @@ import matplotlib.pyplot as plt
 from torchvision import transforms, utils
 from PIL import Image
 
-path_img_dir = "C:/cache/torchok/data/sop/Stanford_Online_Products"
-path_train = "C:/cache/torchok/data/sop/Stanford_Online_Products/Ebay_train.txt"
+path_img_dir = "your_path"
+path_train = "your_path"
 
 
 class SopDataset(Dataset):
