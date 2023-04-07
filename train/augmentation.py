@@ -1,7 +1,7 @@
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
-def train_transform(height=256, width=256):
+def train_transform():
     return A.Compose(
         [
             A.Resize(height=height, width=width),
@@ -25,7 +25,7 @@ def train_transform(height=256, width=256):
         ]
     )
 
-def val_transform(height=256, width=256):
+def val_transform():
     return A.Compose(
         [
             A.Resize(height=height, width=width),
