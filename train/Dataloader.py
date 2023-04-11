@@ -15,18 +15,20 @@ import matplotlib.pyplot as plt
 from torchvision import transforms, utils
 from PIL import Image
 
-path_img_dir = "your_path"
-path_train = "your_path"
+#external import
+from config import config
+
+#for you own data, if you don't wanna to change dataloader, you should prepare the same dataset structure as a SOP
 
 
 class SopDataset(Dataset):
     def __init__(self, transform=None, target_transform=None):
         # data loading
-        self.train_data = pd.read_csv(path_train,
+        self.train_data = pd.read_csv(config.DATA_TRAIN_DIR,
                                       delimiter=" ")[:1000]
         self.img_paths = self.train_data['path']
         self.img_labels = self.train_data['class_id']
-        self.img_dir = path_img_dir
+        self.img_dir = config.DATA_IMG_DIR
         self.transform = transform
         self.target_transform = target_transform
         self.n_samples = self.img_labels.shape[0]

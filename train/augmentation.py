@@ -4,7 +4,7 @@ from albumentations.pytorch import ToTensorV2
 def train_transform():
     return A.Compose(
         [
-            A.Resize(height=height, width=width),
+            A.Resize(height=256, width=256),
             A.HorizontalFlip(p=0.5),
             A.VerticalFlip(p=0.5),
             A.CenterCrop(p=1, height=224, width=224),
@@ -28,7 +28,7 @@ def train_transform():
 def val_transform():
     return A.Compose(
         [
-            A.Resize(height=height, width=width),
+            A.Resize(height=256, width=256),
             A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
             ToTensorV2(),
         ]

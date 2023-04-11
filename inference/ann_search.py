@@ -1,4 +1,5 @@
 import read_save_elastic
+from utils.utils import read_image
 
 def search(query_image, top_k=10):
     # Search for the most similar images
@@ -26,10 +27,6 @@ result[0]['_source']['path']
 
 #show query image and finding image
 
-def read_image(image_path: str):
-    image = cv2.imread(str(image_path), 1)
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-    return image
 
 figure, ax = plt.subplots(nrows=2, ncols=5, figsize=(12, 6))
 
@@ -42,3 +39,4 @@ for i in range(10):
     ax.ravel()[i].set_title(f"Similar image {i+1}")
     plt.tight_layout()
 plt.show()
+

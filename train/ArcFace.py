@@ -8,7 +8,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 #external import
-from BaseModel import BaseModel
+from train.BaseModel import BaseModel
 
 
 

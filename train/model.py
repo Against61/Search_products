@@ -4,7 +4,7 @@ import torch
 import torch.nn as nn
 
 #external import
-from ArcFace import ArcFaceHead
+from train.ArcFace import ArcFaceHead
 
 
 class MyModel(nn.Module):
