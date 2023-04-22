@@ -8,6 +8,9 @@ with open(Path(BASE_DIR, "requirements.txt"), "r") as file:
     required_packages = [ln.strip() for ln in file.readlines()]
 
 
+
+
+
 # defune package
 setup(
     name="im_retrieval",

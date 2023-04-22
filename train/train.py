@@ -12,6 +12,7 @@ from config import config
 from train.model import MyModel
 from train.Dataloader import SopDataset
 from train.split_data import trainloader, testloader
+from config.config import logger
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
@@ -49,6 +50,7 @@ def train_model(model, criterion, optimizer, scheduler, epochs):
         if min_valid_loss > valid_loss:
             print(f'Validation Loss Decreased({min_valid_loss:.6f}--->{valid_loss:.6f}) \t Saving The Model')
             min_valid_loss = valid_loss
+            logger.info(f'Validation Loss Decreased({min_valid_loss:.6f}--->{valid_loss:.6f}) \t Saving The Model')
             # Saving State Dict
             torch.save(model.state_dict(), config.CHECKPOINT_PATH_SAVE_DIR)
     # writer.flush()
