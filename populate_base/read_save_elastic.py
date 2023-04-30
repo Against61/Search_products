@@ -1,11 +1,14 @@
 import cv2
-import elasticsearch
+from elasticsearch import Elasticsearch
 import numpy as np
 import csv
 import json
 
+#internal import
+from config import config
 
 class ImageRetrieval:
+
     def __init__(self, csv_file, model, device, val_transform):
         self.csv_file = csv_file
         self.model = model
@@ -27,7 +30,7 @@ class ImageRetrieval:
 
     def save_to_elasticsearch(self):
         # Connect to Elasticsearch
-        es = elasticsearch.Elasticsearch('http://localhost:9200')
+        es = elasticsearch.Elasticsearch(ELASTICSEARCH_URL)
 
         # Iterate through the rows of the CSV file
         with open(self.csv_file, 'r') as f:
@@ -36,7 +39,7 @@ class ImageRetrieval:
             for row in reader:
                 # row - список строк в файле, без названий столбцов
                 image_id, class_id, image_path, path = row
-                path = 'C:/cache/torchok/data/sop/Stanford_Online_Products/' + path
+                path = DATA_IMG_DIR + path
                 embedding = self.from_img_to_vector(path)
                 image_id = int(image_id)
                 class_id = int(class_id)
@@ -52,29 +55,28 @@ class ImageRetrieval:
 
                 es.index(index='image_retrieval', body=doc, doc_type='_doc')
 
-# Create an instance of the ImageRetrieval class
-ir = ImageRetrieval("C:/Users/Alexei/output_file.csv", device, val_transform)
 
 #put to elastic search dense vector
-res = es.indices.create(index='image_retrieval', body=
-{
-    "mappings": {
-        "properties": {
-            "image_path": {
-                "type": "keyword"
-            },
-            "price": {
-                "type": "float"
-            },
-            "description": {
-                "type": "text"
-            },
-            "image_embedding": {
-                "type": "dense_vector",
-                "dims": 768
+def index_creation(index_name: str, embedding_size: int):
+    res = es.indices.create(index=index_name, body=
+    {
+        "mappings": {
+            "properties": {
+                "image_path": {
+                    "type": "keyword"
+                },
+                "price": {
+                    "type": "float"
+                },
+                "description": {
+                    "type": "text"
+                },
+                "image_embedding": {
+                    "type": "dense_vector",
+                    "dims": embedding_size
+                }
             }
         }
-    }
-})
+    })
 
-ir.save_to_elasticsearch()
+

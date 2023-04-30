@@ -10,6 +10,13 @@ DATA_IMG_DIR = "C:/cache/torchok/data/sop/Stanford_Online_Products"
 
 CHECKPOINT_PATH_SAVE_DIR = "C:Users/Alexei/PycharmProjects/Search_Products/train/checkpoint/saved_model.pth"
 
+#elastic configs
+ELASTICSEARCH_URL = "http://localhost:9200"
+DATA_INDEX_DIR = "C:/cache/torchok/data/sop/Stanford_Online_Products/Ebay_train.txt"
+INDEX_NAME = "image_retrieval"
+EMBEDDING_SIZE = 768
+
+
 # config/config.py
 LOGS_DIR = Path(BASE_DIR, "logs")
 LOGS_DIR.mkdir(parents=True, exist_ok=True)

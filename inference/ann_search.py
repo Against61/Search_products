@@ -1,4 +1,4 @@
-import read_save_elastic
+from populate_base.read_save_elastic import ImageRetrieval
 from utils.utils import read_image
 
 def search(query_image, top_k=10):
