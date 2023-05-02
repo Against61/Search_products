@@ -1,7 +1,17 @@
+
+#internal imports
 from populate_base.read_save_elastic import ImageRetrieval
 from utils.utils import read_image
+from config import config
+from train.model import MyModel
+from train.augmentation import val_transform
+from inference.infer_model import load_model
+
 
 def search(query_image, top_k=10):
+    #transform image to vector
+    ir = ImageRetrieval(config.DATA_INDEX_DIR, load_model, config.DEVICE, val_transform)
+    query_embedding = ir.from_img_to_vector(query_image)
     # Search for the most similar images
     res = es.search(index='image_retrieval', body={
         "size": top_k,
@@ -16,18 +26,17 @@ def search(query_image, top_k=10):
         }
     })
     # Return the results
-    return res['hits']['hits']
+    return res[0]['_source']['path']
 
 query_image = 'C:/cache/torchok/data/sop/Stanford_Online_Products/sofa_final/110891955769_1.JPG'
-query_embedding = ir.from_img_to_vector(query_image)
-query_embedding
+# query_embedding = ir.from_img_to_vector(query_image)
 
-result = search(query_embedding, top_k=10)
-result[0]['_source']['path']
+
+result = search(query_image, top_k = 10)
+# result = search(query_embedding, top_k=10)
+# result[0]['_source']['path']
 
 #show query image and finding image
-
-
 figure, ax = plt.subplots(nrows=2, ncols=5, figsize=(12, 6))
 
 for i in range(10):

@@ -34,8 +34,6 @@ scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.1, steps_per
 
 # Train the model
 
-__main__ = "main"
-
 if args.train:
     train_model(model, criterion, optimizer, scheduler, epochs)
 else:

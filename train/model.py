@@ -25,5 +25,4 @@ class MyModel(nn.Module):
         x = self.resnet(x)
         #         x = self.fc1(x)
         x = self.archead(x, labels)
-
         return x

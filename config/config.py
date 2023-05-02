@@ -1,14 +1,25 @@
 # config.py
 from pathlib import Path
+import torch
+
+#cuda
+DEVICE = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+
 
 # Directories
 BASE_DIR = Path(__file__).parent.parent.absolute()
 CONFIG_DIR = Path(BASE_DIR, "config")
 
+# Train model configs
 DATA_TRAIN_DIR = "C:/cache/torchok/data/sop/Stanford_Online_Products/Ebay_train.txt"
 DATA_IMG_DIR = "C:/cache/torchok/data/sop/Stanford_Online_Products"
 
-CHECKPOINT_PATH_SAVE_DIR = "C:Users/Alexei/PycharmProjects/Search_Products/train/checkpoint/saved_model.pth"
+CHECKPOINT_PATH_SAVE_DIR = "C:Users/Alexei/PycharmProjects/Search_Products/train/checkpoint/saved_check.pth"
+
+# Inference model configs
+CHECKPOINT_PATH_LOAD_DIR = "C:/Users/Alexei/saved_model.pth"
+
+
 
 #elastic configs
 ELASTICSEARCH_URL = "http://localhost:9200"

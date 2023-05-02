@@ -3,6 +3,10 @@ from elasticsearch import Elasticsearch
 import numpy as np
 import csv
 import json
+from train.augmentation import val_transform
+
+import albumentations as A
+from albumentations.pytorch import ToTensorV2
 
 #internal import
 from config import config
@@ -12,8 +16,14 @@ class ImageRetrieval:
     def __init__(self, csv_file, model, device, val_transform):
         self.csv_file = csv_file
         self.model = model
-        self.device = device
-        self.val_transform = val_transform
+        self.device = config.DEVICE
+        self.val_transform = A.Compose(
+    [
+        A.Resize(height=224, width=224),
+        A.Normalize(mean=(0.485, 0.456, 0.406), std=(0.229, 0.224, 0.225)),
+        ToTensorV2(),
+    ]
+)
 
     def from_img_to_vector(self, query_image):
         image = cv2.imread(str(query_image), 1)
@@ -24,7 +34,7 @@ class ImageRetrieval:
         query_image = query_image['image'].unsqueeze(0).to(self.device)
 
         # Get image embedding
-        query_embedding = self.model.forward(query_image).detach().cpu().numpy()
+        query_embedding = self.model(query_image).detach().cpu().numpy()
 
         return query_embedding
 
